@@ -186,12 +186,12 @@ def trip_duration_stats(df):
     else:
         total_time = valid_time.sum()
         print("Total travel time {} seconds or {} hours\n".format(
-            total_time, total_time//60))
+            total_time, total_time//60//60))
 
         # display mean travel time
         avg_time = valid_time.mean()
         print("Average travel time {} seconds or {} hours\n".format(
-            avg_time, avg_time//60))
+            avg_time, avg_time//60//60))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -244,6 +244,23 @@ def user_stats(df):
 print("\n")
 
 
+def display_data(df):
+    view_data = input(
+        '\nWould you like to view 5 rows of individual trip data? Enter yes or no\n')
+    if view_data.lower() != "no":
+        start_loc = 0
+        while True:
+            print(df.iloc[start_loc:start_loc + 5])
+            start_loc += 5
+            view_display = input(
+                "Do you wish to continue to view next 5 rows? (yes or no)").lower()
+            if view_display.lower() != 'yes':
+                break
+
+
+print("\n")
+
+
 def main():
     while True:
         city, month, day = get_filters()
@@ -254,6 +271,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        display_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
